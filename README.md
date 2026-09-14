@@ -10,6 +10,8 @@ All mods are optional-config: they work out of the box, and every setting can be
 
 Hold a key to zoom. Scroll to change magnification.
 
+**Why:** most zoom mods stop at magnification. They don't tell you how far away the thing you're looking at is, and a lot of them hard-code the zoom level and keybind instead of letting you change them. Farsight adds a distance readout for judging travel time at a glance, and every number in it is configurable.
+
 - Default key Z, rebindable in Controls
 - Default 4x, scroll up to 20x, both adjustable
 - Smooth zoom and cinematic camera while zoomed, each can be turned off
@@ -20,6 +22,8 @@ Hold a key to zoom. Scroll to change magnification.
 
 Middle-click any inventory to sort it. Works on vanilla servers.
 
+**Why:** most inventory-sorting mods add a new button onto the inventory GUI, which is small and fiddly to aim for and click. Tidy uses a middle-click anywhere in the inventory instead, which is faster and doesn't need you to hunt for a button.
+
 - Sort by type (creative menu order, like items together) or by quantity (biggest stacks first)
 - Shift + click runs the other sort, or bind it to its own key
 - Optional grouping: tools, armour, food and blocks first
@@ -28,21 +32,28 @@ Middle-click any inventory to sort it. Works on vanilla servers.
 
 ### Cascade (server)
 
-Crouch and chop one log to fell the whole tree.
+Crouch and chop one log to fell the whole tree, or crouch and mine one ore to take the whole vein.
+
+**Why:** tree-felling and vein-mining mods tend to pick one side of a trade-off and stay there — either they're free (no durability or hunger cost, so they trivialise gathering) or they're clunky (huge lag from hundreds of dropped item entities and floating XP orbs). Cascade tries to keep both features from being overpowered as well as clean: durability is charged as if every block had been broken by hand, hunger drains faster than that to make clearing a whole tree or vein a real cost rather than a free lunch, and it doesn't leave a mess behind.
 
 - Works on vanilla, modded and nether trees, and huge mushrooms
+- Vein mining for ores using the same crouch-and-mine gesture
+- Not a free lunch: durability is charged per block as if broken by hand, and hunger drains faster than the vanilla per-block rate, so felling a big tree or stripping a big vein costs noticeably more food than mining it block by block
+- Mining/cutting speed scales with the size of the tree or vein, so bigger jobs take proportionally longer
+- Drops are collected and dropped as pre-stacked item entities, and XP is clumped into fewer orbs, instead of the lag-inducing pile of single-item entities and separate orbs that other mods leave behind
+- Same clumped-drop treatment extended to bamboo, sugar cane, seaweed, vines and similar plants, so farming and clean-up are less tedious
 - Leaves decay quickly and a sapling is replanted at the stump
-- Vein mining for ores with the same crouch-and-mine gesture
-- Bigger trees and bigger veins take longer to break, and tool durability and hunger are charged as if each block was broken by hand
-- Drops are collected into stacks instead of a pile of item entities
 - Refuses anything that does not look like a natural tree, so log cabins are safe
 
 ### SilkSpawners (server)
 
 Break a spawner with Silk Touch to pick it up with all its data intact.
 
+**Why:** spawner-pickup mods exist, but they're usually all-or-nothing — you always get the spawner, and it comes out generic. SilkSpawners adds a chance of the spawner just breaking on you, same as any other silk-touched block can fail you, and it keeps the spawner's actual NBT data instead of resetting it. A custom spawner that was tuned to spawn, say, mobs with unusual armour, keeps those exact properties when it's picked back up and replaced.
+
 - The dropped item is named after its mob, for example Zombie Spawner
-- Configurable drop chance, a failed roll gives the vanilla XP instead
+- Configurable chance to break the spawner instead of dropping it; a failed roll gives the vanilla XP instead
+- Preserves custom NBT data, so a modified spawner (custom mob variants, armour, equipment, etc.) keeps its exact configuration when moved
 - Slowness while a spawner is in your inventory, can be turned off
 - Anyone can place the dropped spawner, not just operators
 
