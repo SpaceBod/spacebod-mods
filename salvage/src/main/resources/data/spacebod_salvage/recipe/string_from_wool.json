@@ -1,0 +1,17 @@
+{
+	"fabric:load_conditions": [
+		{
+			"condition": "spacebod_salvage:enabled",
+			"recipe": "wool_to_string"
+		}
+	],
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		"#minecraft:wool"
+	],
+	"result": {
+		"id": "minecraft:string",
+		"count": 2
+	}
+}

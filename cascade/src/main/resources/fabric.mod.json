@@ -1,0 +1,39 @@
+{
+	"schemaVersion": 1,
+	"id": "spacebod_cascade",
+	"version": "${version}",
+	"name": "Cascade",
+	"description": "Crouch and chop one log to fell the whole tree - vanilla, modded, warped nether trees and huge mushrooms all included. Leaves decay fast, saplings replant themselves, and drops are collected into neat stacks instead of a pile of entities.",
+	"authors": [
+		"SpaceBod"
+	],
+	"contact": {
+		"homepage": "https://github.com/SpaceBod/spacebod-mods",
+		"sources": "https://github.com/SpaceBod/spacebod-mods",
+		"issues": "https://github.com/SpaceBod/spacebod-mods/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/spacebod_cascade/icon.png",
+	"environment": "*",
+	"mixins": [
+		"spacebod_cascade.mixins.json"
+	],
+	"entrypoints": {
+		"main": [
+			"dev.spacebod.cascade.Cascade"
+		],
+		"modmenu": [
+			"dev.spacebod.cascade.client.modmenu.CascadeModMenu"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "${minecraft_range}",
+		"java": ">=25",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*",
+		"cloth-config": "*"
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"schemaVersion": 1,
+	"id": "spacebod_farsight",
+	"version": "${version}",
+	"name": "Farsight",
+	"description": "Hold a key to zoom in, scroll to adjust magnification. Shows coordinates and distance of what you're looking at.",
+	"authors": [
+		"SpaceBod"
+	],
+	"contact": {
+		"homepage": "https://github.com/SpaceBod/spacebod-mods",
+		"sources": "https://github.com/SpaceBod/spacebod-mods",
+		"issues": "https://github.com/SpaceBod/spacebod-mods/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/spacebod_farsight/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"dev.spacebod.farsight.client.FarsightClient"
+		],
+		"modmenu": [
+			"dev.spacebod.farsight.client.modmenu.FarsightModMenu"
+		]
+	},
+	"mixins": [
+		{
+			"config": "spacebod_farsight.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "${minecraft_range}",
+		"java": ">=25",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*",
+		"cloth-config": "*"
+	}
+}

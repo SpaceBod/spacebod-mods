@@ -1,0 +1,42 @@
+{
+	"schemaVersion": 1,
+	"id": "spacebod_tidy",
+	"version": "${version}",
+	"name": "Tidy",
+	"description": "Middle-click to sort any inventory. Shift for the other sort mode.",
+	"authors": [
+		"SpaceBod"
+	],
+	"contact": {
+		"homepage": "https://github.com/SpaceBod/spacebod-mods",
+		"sources": "https://github.com/SpaceBod/spacebod-mods",
+		"issues": "https://github.com/SpaceBod/spacebod-mods/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/spacebod_tidy/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"dev.spacebod.tidy.client.TidyClient"
+		],
+		"modmenu": [
+			"dev.spacebod.tidy.client.modmenu.TidyModMenu"
+		]
+	},
+	"mixins": [
+		{
+			"config": "spacebod_tidy.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "${minecraft_range}",
+		"java": ">=25",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*",
+		"cloth-config": "*"
+	}
+}

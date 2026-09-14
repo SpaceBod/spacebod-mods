@@ -1,0 +1,117 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'maven-publish'
+}
+
+// One code base, one jar per Minecraft series (26.1, 26.2, 26.3, ...). The series is derived from
+// minecraft_version (26.1.2 -> 26.1, 26.3-rc-3 -> 26.3) and drives three things: the "+mc<series>"
+// suffix on the mod version, the minecraft dependency range written into fabric.mod.json, and which
+// src/versions/<series>/ overlay is compiled in. Anything that is the same on every version lives in
+// src/main and src/client as usual; only classes that genuinely differ go in an overlay, one copy per
+// series, so each jar is plain compiled code for exactly the game it targets - no reflection, no
+// runtime version sniffing. release-matrix.ps1 builds every series by overriding minecraft_version.
+def mcSeries = (project.minecraft_version =~ /^\d+\.\d+/)[0]
+def mcNextSeries = mcSeries.tokenize('.').with { "${it[0]}.${(it[1] as int) + 1}" }
+version = "${project.mod_version}+mc${mcSeries}"
+
+repositories {
+	maven { name = 'TerraformersMC'; url = 'https://maven.terraformersmc.com/releases/' }
+	maven { name = 'Shedaniel'; url = 'https://maven.shedaniel.me/' }
+	// Add repositories to retrieve artifacts from in here.
+	// You should only use this when depending on other mods because
+	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
+	// for more information about repositories.
+}
+
+loom {
+	splitEnvironmentSourceSets()
+
+	mods {
+		"spacebod_salvage" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
+}
+
+// Version-specific overlay. Missing directories are simply ignored, so a mod with no
+// version-specific code needs none of these folders to exist.
+sourceSets {
+	main {
+		java.srcDir "src/versions/${mcSeries}/main/java"
+		resources.srcDir "src/versions/${mcSeries}/main/resources"
+	}
+	client {
+		java.srcDir "src/versions/${mcSeries}/client/java"
+		resources.srcDir "src/versions/${mcSeries}/client/resources"
+	}
+}
+
+dependencies {
+	// To change the versions see the gradle.properties file
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	// Fabric API. This is technically optional, but you probably want it anyway.
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// Optional: config screen in Mod Menu, built with Cloth Config. Neither is required at runtime.
+	compileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+	localRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
+	compileOnly "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
+	localRuntime "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
+}
+
+processResources {
+	def version = project.version
+	// ">=26.3- <26.4-": the trailing hyphens make Fabric Loader include pre-releases, so a jar built
+	// for a series also loads on that series' snapshots/RCs and on every patch release within it.
+	def minecraftRange = ">=${mcSeries}- <${mcNextSeries}-"
+	inputs.property "version", version
+	inputs.property "minecraftRange", minecraftRange
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version, "minecraft_range": minecraftRange
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+}
+
+java {
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// If you remove this line, sources will not be generated.
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+	def projectName = project.name
+	inputs.property "projectName", projectName
+
+	from("LICENSE") {
+		rename { "${it}_$projectName"}
+	}
+}
+
+// configure the maven publication
+publishing {
+	publications {
+		create("mavenJava", MavenPublication) {
+			from components.java
+		}
+	}
+
+	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+	repositories {
+		// Add repositories to publish to here.
+		// Notice: This block does NOT have the same function as the block in the top level.
+		// The repositories here will be used for publishing your artifact, not for
+		// retrieving dependencies.
+	}
+}

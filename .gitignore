@@ -1,0 +1,35 @@
+# Gradle
+.gradle/
+build/
+out/
+**/run/
+!**/src/**/build/
+!**/src/**/out/
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+bin/
+.factorypath
+*.launch
+
+# Fabric / Loom
+**/remappedSrc/
+**/.loom-cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+*.env
+.env.*
+
+# Built release jars (attach to GitHub Releases instead)
+releases/

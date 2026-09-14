@@ -1,0 +1,36 @@
+{
+	"schemaVersion": 1,
+	"id": "spacebod_salvage",
+	"version": "${version}",
+	"name": "Salvage",
+	"description": "Turn junk into materials: smelt rotten flesh into leather, craft wool into string. Every recipe can be toggled in the config.",
+	"authors": [
+		"SpaceBod"
+	],
+	"contact": {
+		"homepage": "https://github.com/SpaceBod/spacebod-mods",
+		"sources": "https://github.com/SpaceBod/spacebod-mods",
+		"issues": "https://github.com/SpaceBod/spacebod-mods/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/spacebod_salvage/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.spacebod.salvage.Salvage"
+		],
+		"modmenu": [
+			"dev.spacebod.salvage.client.modmenu.SalvageModMenu"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "${minecraft_range}",
+		"java": ">=25",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*",
+		"cloth-config": "*"
+	}
+}
